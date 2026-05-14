@@ -1,91 +1,98 @@
-# CineVault — Movie Review Website
+# CineVault
 
-CineVault is a modern, responsive web application for movie enthusiasts to discover, review, and rate their favorite films. Built with PHP and MySQL, it offers a seamless community experience with a premium dark/light mode design.
+CineVault is a modern, responsive web application for movie enthusiasts to discover, review, and rate their favorite films. Built with Core PHP and MySQL, it provides a seamless community experience for film lovers.
 
-## 🎬 Features
+## Features
 
-- **Discover Movies**: Browse a wide collection of movies with details like genre, release year, and synopsis.
-- **Reviews & Ratings**: Share your thoughts and rate movies on a 1-5 star scale. Read reviews from other community members.
-- **Trending & Latest**: View the top-rated trending movies and the latest community reviews on the home page.
-- **User Accounts**: Secure authentication system with registration and login functionalities.
-- **User Profiles**: Manage your profile and see your review history.
-- **Add New Movies**: Authenticated users can contribute to the database by adding new movies along with posters.
-- **Dark & Light Mode**: Built-in, persistent theme toggle to switch between dark and light viewing experiences.
-- **Responsive Design**: Fully responsive UI built with modern HTML and CSS, looking great on desktop and mobile.
+- **Movie Discovery:** Browse a wide collection of movies with detailed information including genre, release year, and synopsis.
+- **Reviews & Ratings:** Share your thoughts and rate movies on a 1-5 star scale. Read reviews from other community members.
+- **Trending System:** View the top-rated trending movies and the latest community reviews directly on the home page.
+- **User Authentication:** Secure user registration, login, and session management.
+- **User Profiles:** Manage your profile and view your past review history.
+- **Crowdsourced Content:** Authenticated users can contribute to the database by adding new movies and uploading posters.
+- **Dark/Light Mode:** Built-in, persistent theme toggle to switch between dark and light viewing experiences.
+- **Responsive Design:** Fully responsive UI built with modern HTML and CSS, optimized for desktop and mobile devices.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-- **Frontend**: HTML5, CSS3 (Vanilla CSS with Custom Properties/Variables), JavaScript (Vanilla for interactivity and theme toggling).
-- **Backend**: PHP (Core PDO).
-- **Database**: MySQL.
+- **Frontend:** HTML5, CSS3 (Custom Properties & Flexbox/Grid), Vanilla JavaScript
+- **Backend:** Core PHP (PHP 7.4+)
+- **Database:** MySQL (via PDO)
 
-## 🚀 Getting Started
+## Getting Started
 
-Follow these instructions to set up the project locally.
+Follow these instructions to set up the project on your local machine for development and testing.
 
 ### Prerequisites
 
-- A local web server stack like [XAMPP](https://www.apachefriends.org/index.html), [WAMP](https://www.wampserver.com/en/), or [MAMP](https://www.mamp.info/).
+- A local web server stack such as XAMPP, WAMP, or MAMP.
 - PHP 7.4 or higher.
 - MySQL server.
 
 ### Installation
 
-1. **Clone the repository** (or download the source code):
+1. **Clone the repository:**
    ```bash
    git clone https://github.com/I-am-Sayeem/Movie-Review-Website.git
    ```
 
-2. **Move to Web Root**:
-   Place the project folder inside your web server's document root (e.g., `htdocs` for XAMPP or `www` for WAMP).
+2. **Move to Web Root:**
+   Place the cloned project folder inside your web server's document root (e.g., `htdocs` for XAMPP or `www` for WAMP).
 
-3. **Database Setup**:
-   - The application is designed to auto-initialize the database and tables upon first connection.
-   - Ensure your MySQL server is running.
-   - If needed, verify the database credentials in `config/database.php`:
-     ```php
-     define('DB_HOST', 'localhost');
-     define('DB_NAME', 'cinevault');
-     define('DB_USER', 'root');
-     define('DB_PASS', '');
-     ```
-   - *Note: On the first successful connection, the app will create the `cinevault` database, necessary tables (`users`, `movies`, `reviews`), and seed it with demo data!*
+3. **Database Configuration:**
+   The application is designed to automatically initialize the database and tables upon the first connection.
+   
+   Ensure your MySQL server is running. If your local MySQL setup requires a password, verify and update the database credentials in `config/database.php`:
+   ```php
+   define('DB_HOST', 'localhost');
+   define('DB_NAME', 'cinevault');
+   define('DB_USER', 'root');
+   define('DB_PASS', '');
+   ```
 
-4. **Run the Application**:
-   - Open your web browser and navigate to `http://localhost/Movie-Review-Website/` (adjust the URL according to your folder name and setup).
-   - You can log in using the demo account:
-     - **Email**: demo@cinevault.com
-     - **Password**: demo1234
-   - Or, create a new account to start exploring!
+4. **Run the Application:**
+   Open your web browser and navigate to the project directory (e.g., `http://localhost/Movie-Review-Website/`).
+   
+   *Note: On your first visit, the system will automatically create the `cinevault` database, build all necessary tables, and inject demo data.*
 
-## 📂 Project Structure
+### Demo Account
+
+To test the platform immediately, you can log in using the following demo credentials:
+- **Email:** demo@cinevault.com
+- **Password:** demo1234
+
+## Project Structure
 
 ```text
+Movie-Review-Website/
 ├── assets/
-│   ├── css/          # Stylesheets (style.css)
-│   └── images/       # Posters and other image assets
+│   ├── css/          # Core stylesheets and theme variables
+│   └── images/       # Movie posters and UI graphics
 ├── config/
-│   └── database.php  # Database connection, auto-setup & seeding
+│   └── database.php  # Database connection and auto-setup script
 ├── includes/
-│   ├── auth.php      # Authentication utility functions
+│   ├── auth.php      # Session and authentication helpers
 │   ├── footer.php    # Global footer template
-│   └── header.php    # Global header template (includes navigation)
+│   └── header.php    # Global header and navigation template
 ├── index.php         # Home page (Trending movies, latest reviews)
-├── movies.php        # Browse all movies
+├── movies.php        # Complete movie catalog
 ├── movie.php         # Single movie details and reviews
 ├── add_movie.php     # Form to add a new movie
-├── edit_review.php   # Edit an existing review
-├── delete_review.php # Delete a review
+├── profile.php       # User dashboard
 ├── login.php         # User login page
 ├── register.php      # User registration page
-├── logout.php        # User logout script
-└── profile.php       # User profile page
+└── logout.php        # User logout script
 ```
 
-## 🤝 Contributing
+## Contributing
 
-Contributions, issues, and feature requests are welcome! Feel free to check the issues page if you want to contribute.
+Contributions, issues, and feature requests are welcome.
+1. Fork the project.
+2. Create your feature branch (`git checkout -b feature/NewFeature`).
+3. Commit your changes (`git commit -m 'Add NewFeature'`).
+4. Push to the branch (`git push origin feature/NewFeature`).
+5. Open a Pull Request.
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License.
