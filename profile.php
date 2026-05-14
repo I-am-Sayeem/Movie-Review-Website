@@ -118,6 +118,7 @@ require_once 'includes/header.php';
     </section>
 
     <!-- User Reviews -->
+     
     <section class="section" style="padding-top:0;">
         <div class="section-header" style="text-align:left;">
             <h2>📝 Your Reviews</h2>
@@ -161,7 +162,7 @@ require_once 'includes/header.php';
 </div>
 
 <!-- Delete Modal -->
- 
+
 <div class="modal-overlay" id="deleteModal">
     <div class="modal">
         <h3>Delete Review?</h3>

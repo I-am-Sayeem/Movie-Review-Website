@@ -7,6 +7,7 @@ if (isLoggedIn()) {
     exit;
 }
 
+
 $errors = [];
 $oldEmail = '';
 
