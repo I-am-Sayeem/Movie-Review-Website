@@ -161,6 +161,7 @@ require_once 'includes/header.php';
 </div>
 
 <!-- Delete Modal -->
+ 
 <div class="modal-overlay" id="deleteModal">
     <div class="modal">
         <h3>Delete Review?</h3>
