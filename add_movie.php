@@ -19,16 +19,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $old = compact('title', 'genre', 'description');
     $old['release_year'] = $releaseYear;
 
-    // Validation
-    if (strlen($title) < 1) {
-        $errors['title'] = 'Movie title is required.';
-    }
-    if (!in_array($genre, $genres)) {
-        $errors['genre'] = 'Please select a valid genre.';
-    }
-    if ($releaseYear < 1888 || $releaseYear > (int)date('Y') + 5) {
-        $errors['release_year'] = 'Please enter a valid release year.';
-    }
+   // Validation
+if (strlen($title) < 1) {
+    $errors['title'] = 'Movie title is required.';
+}
+if (!in_array($genre, $genres)) {
+    $errors['genre'] = 'Please select a valid genre.';
+}
+if ($releaseYear < 1888 || $releaseYear > (int)date('Y') + 5) {
+    $errors['release_year'] = 'Please enter a valid release year.';
+}
+if (strlen($description) < 10) {
+    $errors['description'] = 'Description must be at least 10 characters.';
+}
+
 
     // Handle poster upload
     $posterPath = null;
