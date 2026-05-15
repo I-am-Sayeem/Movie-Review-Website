@@ -3,8 +3,9 @@ require_once 'includes/auth.php';
 requireLogin();
 require_once 'config/database.php';
 
-$reviewId = intval($_GET['id'] ?? 0);
-$movieId = intval($_GET['movie_id'] ?? 0);
+$reviewId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT) ?: 0;
+$movieId  = filter_input(INPUT_GET, 'movie_id', FILTER_VALIDATE_INT) ?: 0;
+
 
 if ($reviewId <= 0) {
     header('Location: profile.php');
