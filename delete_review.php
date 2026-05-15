@@ -17,9 +17,9 @@ $stmt = $pdo->prepare("DELETE FROM reviews WHERE id = ? AND user_id = ?");
 $stmt->execute([$reviewId, getCurrentUserId()]);
 
 if ($stmt->rowCount() > 0) {
-    setFlash('success', 'Review deleted successfully.');
+    setFlash('success', '✅ Review deleted successfully.');
 } else {
-    setFlash('error', 'Review not found or you don\'t have permission.');
+    setFlash('error', '❌ Review not found or you don\'t have permission.');
 }
 
 // Redirect back
