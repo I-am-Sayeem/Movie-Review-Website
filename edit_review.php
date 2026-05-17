@@ -28,6 +28,8 @@ if (!$review) {
 
 $errors = [];
 
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $rating = intval($_POST['rating'] ?? 0);
     $reviewText = trim($_POST['review_text'] ?? '');
