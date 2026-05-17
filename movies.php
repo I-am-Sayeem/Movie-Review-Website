@@ -66,6 +66,7 @@ $sql = "SELECT m.*,
 $params2 = $params; // same params
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params2);
+
 $movies = $stmt->fetchAll();
 
 // Get distinct genres & years for filters
