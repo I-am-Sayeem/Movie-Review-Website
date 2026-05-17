@@ -81,7 +81,8 @@ require_once 'includes/header.php';
 
             <div class="flex" style="gap:12px;">
                 <button type="submit" class="btn btn-primary">Update Review</button>
-                <a href="movie.php?id=<?php echo $review['movie_id']; ?>" class="btn btn-outline">Cancel</a>
+               <a href="movie.php?id=<?php echo $review['movie_id']; ?>" class="btn btn-outline">Back to Movie</a>
+
             </div>
         </form>
     </div>
