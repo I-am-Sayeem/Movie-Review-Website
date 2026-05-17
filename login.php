@@ -48,7 +48,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 require_once 'includes/header.php';
 ?>
 
-<div class="auth-page">
+<!-- Particles Background -->
+<div id="particles-bg" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></div>
+
+<div class="auth-page" style="position: relative; z-index: 1;">
     <div class="card form-card">
         <h2>Welcome Back</h2>
         <p class="form-subtitle">Log in to your CineVault account</p>
@@ -82,3 +85,4 @@ require_once 'includes/header.php';
 </div>
 
 <?php require_once 'includes/footer.php'; ?>
+<script src="assets/js/bundle.js"></script>

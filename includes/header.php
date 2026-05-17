@@ -15,6 +15,7 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/dome-gallery.css">
     <script>
         // Apply saved theme immediately to prevent flash
         (function() {
@@ -41,8 +42,8 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
             
             <div class="nav-links" id="navLinks">
                 <a href="index.php" class="nav-link <?php echo $currentPage === 'index' ? 'active' : ''; ?>">Home</a>
-                <a href="movies.php" class="nav-link <?php echo $currentPage === 'movies' ? 'active' : ''; ?>">Movies</a>
                 <?php if (isLoggedIn()): ?>
+                    <a href="movies.php" class="nav-link <?php echo $currentPage === 'movies' ? 'active' : ''; ?>">Movies</a>
                     <a href="add_movie.php" class="nav-link <?php echo $currentPage === 'add_movie' ? 'active' : ''; ?>">Add Movie</a>
                     <a href="profile.php" class="nav-link <?php echo $currentPage === 'profile' ? 'active' : ''; ?>">Profile</a>
                 <?php endif; ?>

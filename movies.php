@@ -2,6 +2,13 @@
 $pageTitle = 'Browse Movies';
 require_once 'includes/header.php';
 
+// Require login to access movies
+if (!isLoggedIn()) {
+    setFlash('error', 'Please log in to browse movies.');
+    header('Location: login.php');
+    exit;
+}
+
 // Get filter parameters
 $search = trim($_GET['search'] ?? '');
 $genre = trim($_GET['genre'] ?? '');

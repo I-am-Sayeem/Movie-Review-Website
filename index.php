@@ -7,7 +7,7 @@ $totalMovies = $pdo->query("SELECT COUNT(*) FROM movies")->fetchColumn();
 $totalReviews = $pdo->query("SELECT COUNT(*) FROM reviews")->fetchColumn();
 $totalUsers = $pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
 
-// Trending movies (top 6 by average rating, minimum 1 review)
+// Trending movies (all reviewed movies for the dome gallery)
 $trendingStmt = $pdo->query("
     SELECT m.*, 
            COALESCE(AVG(r.rating), 0) as avg_rating,
@@ -17,7 +17,7 @@ $trendingStmt = $pdo->query("
     GROUP BY m.id
     HAVING review_count > 0
     ORDER BY avg_rating DESC, review_count DESC
-    LIMIT 6
+    LIMIT 50
 ");
 $trendingMovies = $trendingStmt->fetchAll();
 
@@ -35,11 +35,14 @@ $latestStmt = $pdo->query("
 $latestReviews = $latestStmt->fetchAll();
 ?>
 
+<!-- Particles Background -->
+<div id="particles-bg" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></div>
+
 <!-- Hero Section -->
-<section class="hero">
+<section class="hero" style="position: relative; z-index: 1;">
     <div class="container">
         <h1 class="animate-in">
-            Discover & Review<br>
+            Discover &amp; Review<br>
             <span class="gradient-text">Your Favorite Movies</span>
         </h1>
         <p class="animate-in animate-delay-1">
@@ -67,35 +70,30 @@ $latestReviews = $latestStmt->fetchAll();
     </div>
 </section>
 
-<!-- Trending Section -->
-<?php if (!empty($trendingMovies)): ?>
-<section class="section">
+<!-- Trending Section — DomeGallery -->
+<?php if (!empty($trendingMovies)):
+    $domeImages = [];
+    foreach ($trendingMovies as $movie) {
+        if (!empty($movie['poster'])) {
+            $domeImages[] = [
+                'src' => $movie['poster'],
+                'alt' => $movie['title'],
+                'title' => $movie['title'],
+                'rating' => round($movie['avg_rating'], 1),
+                'genre' => $movie['genre']
+            ];
+        }
+    }
+?>
+<section class="section" style="position: relative; z-index: 1;">
     <div class="container">
         <div class="section-header">
             <h2>🔥 Trending Now</h2>
             <p>Top rated movies by our community</p>
         </div>
-        <div class="trending-grid">
-            <?php foreach ($trendingMovies as $i => $movie): ?>
-            <a href="movie.php?id=<?php echo $movie['id']; ?>" class="trending-card card animate-on-scroll">
-                <span class="trending-rank"><?php echo $i + 1; ?></span>
-                <?php if ($movie['poster']): ?>
-                    <img src="<?php echo sanitize($movie['poster']); ?>" alt="<?php echo sanitize($movie['title']); ?>" class="trending-poster">
-                <?php else: ?>
-                    <div class="trending-placeholder">
-                        <span class="t-icon">🎬</span>
-                        <span class="t-title"><?php echo sanitize($movie['title']); ?></span>
-                    </div>
-                <?php endif; ?>
-                <div class="trending-info">
-                    <h4><?php echo sanitize($movie['title']); ?></h4>
-                    <div class="trending-meta">
-                        <span class="genre-tag"><?php echo sanitize($movie['genre']); ?></span>
-                        <?php echo renderStars($movie['avg_rating']); ?>
-                    </div>
-                </div>
-            </a>
-            <?php endforeach; ?>
+        <div id="dome-gallery-container"
+             data-images='<?php echo json_encode($domeImages, JSON_HEX_APOS | JSON_HEX_QUOT); ?>'
+             style="width: 100%; height: 600px; position: relative; border-radius: 16px; overflow: hidden;">
         </div>
     </div>
 </section>
@@ -103,7 +101,7 @@ $latestReviews = $latestStmt->fetchAll();
 
 <!-- Latest Reviews Section -->
 <?php if (!empty($latestReviews)): ?>
-<section class="section" style="padding-top: 0;">
+<section class="section" style="padding-top: 0; position: relative; z-index: 1;">
     <div class="container">
         <div class="section-header">
             <h2>💬 Latest Reviews</h2>
@@ -137,3 +135,4 @@ $latestReviews = $latestStmt->fetchAll();
 <?php endif; ?>
 
 <?php require_once 'includes/footer.php'; ?>
+<script src="assets/js/bundle.js"></script>
