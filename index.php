@@ -15,7 +15,6 @@ $trendingStmt = $pdo->query("
     FROM movies m
     LEFT JOIN reviews r ON m.id = r.movie_id
     GROUP BY m.id
-    HAVING review_count > 0
     ORDER BY avg_rating DESC, review_count DESC
     LIMIT 50
 ");
@@ -71,8 +70,9 @@ $latestReviews = $latestStmt->fetchAll();
 </section>
 
 <!-- Trending Section — DomeGallery -->
-<?php if (!empty($trendingMovies)):
-    $domeImages = [];
+<?php 
+$domeImages = [];
+if (!empty($trendingMovies)) {
     foreach ($trendingMovies as $movie) {
         if (!empty($movie['poster'])) {
             $domeImages[] = [
@@ -84,7 +84,9 @@ $latestReviews = $latestStmt->fetchAll();
             ];
         }
     }
+}
 ?>
+<?php if (!empty($domeImages)): ?>
 <section class="section" style="position: relative; z-index: 1;">
     <div class="container">
         <div class="section-header">
@@ -92,7 +94,7 @@ $latestReviews = $latestStmt->fetchAll();
             <p>Top rated movies by our community</p>
         </div>
         <div id="dome-gallery-container"
-             data-images='<?php echo json_encode($domeImages, JSON_HEX_APOS | JSON_HEX_QUOT); ?>'
+             data-images="<?php echo htmlspecialchars(json_encode($domeImages), ENT_QUOTES, 'UTF-8'); ?>"
              style="width: 100%; height: 600px; position: relative; border-radius: 16px; overflow: hidden;">
         </div>
     </div>
@@ -135,4 +137,3 @@ $latestReviews = $latestStmt->fetchAll();
 <?php endif; ?>
 
 <?php require_once 'includes/footer.php'; ?>
-<script src="assets/js/bundle.js"></script>
