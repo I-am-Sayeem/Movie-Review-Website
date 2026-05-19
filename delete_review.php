@@ -1,4 +1,4 @@
-echo "# Movie-Review-Website" >> README.md<?php
+<?php
 require_once 'includes/auth.php';
 requireLogin();
 require_once 'config/database.php';
@@ -12,9 +12,14 @@ if ($reviewId <= 0) {
     exit;
 }
 
-// Verify ownership and delete
-$stmt = $pdo->prepare("DELETE FROM reviews WHERE id = ? AND user_id = ?");
-$stmt->execute([$reviewId, getCurrentUserId()]);
+// Verify ownership (or admin) and delete
+if (isAdmin()) {
+    $stmt = $pdo->prepare("DELETE FROM reviews WHERE id = ?");
+    $stmt->execute([$reviewId]);
+} else {
+    $stmt = $pdo->prepare("DELETE FROM reviews WHERE id = ? AND user_id = ?");
+    $stmt->execute([$reviewId, getCurrentUserId()]);
+}
 
 if ($stmt->rowCount() > 0) {
     setFlash('success', '✅ Review deleted successfully.');

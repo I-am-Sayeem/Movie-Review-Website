@@ -82,8 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // ---------- Animated counters ----------
     initCounters();
 
-    // ---------- Theme toggle ----------
-    initThemeToggle();
 });
 
 // ---------- Star Rating ----------
@@ -244,16 +242,3 @@ function animateCounter(el, target) {
     requestAnimationFrame(update);
 }
 
-// ---------- Theme Toggle ----------
-function initThemeToggle() {
-    const toggle = document.getElementById('themeToggle');
-    if (!toggle) return;
-
-    toggle.addEventListener('click', () => {
-        const html = document.documentElement;
-        const current = html.getAttribute('data-theme') || 'dark';
-        const next = current === 'dark' ? 'light' : 'dark';
-        html.setAttribute('data-theme', next);
-        localStorage.setItem('cinevault-theme', next);
-    });
-}

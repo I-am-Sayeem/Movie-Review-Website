@@ -97,6 +97,14 @@ require_once 'includes/header.php';
                 <?php endif; ?>
             </div>
 
+            <?php if (isAdmin()): ?>
+            <div style="margin-top: 12px;">
+                <button class="btn btn-danger btn-sm" 
+                        data-delete-movie="delete_movie.php?id=<?php echo $movieId; ?>"
+                        >🗑️ Delete Movie</button>
+            </div>
+            <?php endif; ?>
+
             <!-- Rating Summary -->
             <div class="movie-rating-big">
                 <div class="rating-value"><?php echo number_format($avgRating, 1); ?></div>
@@ -201,4 +209,34 @@ require_once 'includes/header.php';
     </div>
 </div>
 
+<?php if (isAdmin()): ?>
+<!-- Delete Movie Modal -->
+<div class="modal-overlay" id="deleteMovieModal">
+    <div class="modal">
+        <h3>🗑️ Delete Movie?</h3>
+        <p>This will permanently delete the movie and <strong>all its reviews</strong>. This action cannot be undone.</p>
+        <div class="modal-actions">
+            <button class="btn btn-outline" id="cancelDeleteMovie">Cancel</button>
+            <a href="#" class="btn btn-danger" id="confirmDeleteMovie">Delete Movie</a>
+        </div>
+    </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('deleteMovieModal');
+    const confirmBtn = document.getElementById('confirmDeleteMovie');
+    const cancelBtn = document.getElementById('cancelDeleteMovie');
+    document.querySelectorAll('[data-delete-movie]').forEach(btn => {
+        btn.addEventListener('click', function() {
+            confirmBtn.href = this.getAttribute('data-delete-movie');
+            modal.classList.add('active');
+        });
+    });
+    if (cancelBtn) cancelBtn.addEventListener('click', () => modal.classList.remove('active'));
+    if (modal) modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('active'); });
+});
+</script>
+<?php endif; ?>
+
 <?php require_once 'includes/footer.php'; ?>
+

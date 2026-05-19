@@ -4,7 +4,7 @@ require_once 'includes/auth.php';
 
 // Redirect if already logged in
 if (isLoggedIn()) {
-    header('Location: index.php');
+    header('Location: movies.php');
     exit;
 }
 

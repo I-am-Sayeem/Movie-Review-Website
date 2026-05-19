@@ -14,6 +14,18 @@ function requireLogin(): void {
     }
 }
 
+function isAdmin(): bool {
+    return isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
+}
+
+function requireAdmin(): void {
+    if (!isLoggedIn() || !isAdmin()) {
+        setFlash('error', 'Access denied. Admin privileges required.');
+        header('Location: index.php');
+        exit;
+    }
+}
+
 function getCurrentUserId(): ?int {
     return $_SESSION['user_id'] ?? null;
 }

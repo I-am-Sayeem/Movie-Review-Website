@@ -84,7 +84,7 @@ $years = $pdo->query("SELECT DISTINCT release_year FROM movies ORDER BY release_
 <div class="container">
     <div class="page-header flex-between">
         <h1><span class="emoji">🎬</span> Browse Movies</h1>
-        <?php if (isLoggedIn()): ?>
+        <?php if (isAdmin()): ?>
             <a href="add_movie.php" class="btn btn-primary">+ Add Movie</a>
         <?php endif; ?>
     </div>
@@ -127,7 +127,7 @@ $years = $pdo->query("SELECT DISTINCT release_year FROM movies ORDER BY release_
             <div class="empty-icon">🎬</div>
             <h3>No Movies Found</h3>
             <p>Try adjusting your search or filters, or add a new movie!</p>
-            <?php if (isLoggedIn()): ?>
+            <?php if (isAdmin()): ?>
                 <a href="add_movie.php" class="btn btn-primary">+ Add a Movie</a>
             <?php endif; ?>
         </div>

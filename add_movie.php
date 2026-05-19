@@ -1,7 +1,7 @@
 <?php
 $pageTitle = 'Add Movie';
 require_once 'includes/auth.php';
-requireLogin();
+requireAdmin();
 
 $errors = [];
 $old = ['title' => '', 'genre' => '', 'release_year' => '', 'description' => ''];

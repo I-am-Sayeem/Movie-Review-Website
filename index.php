@@ -1,7 +1,12 @@
 <?php
+require_once 'includes/auth.php';
+if (isLoggedIn()) {
+    header('Location: movies.php');
+    exit;
+}
+
 $pageTitle = 'Home';
 require_once 'includes/header.php';
-
 // Fetch stats
 $totalMovies = $pdo->query("SELECT COUNT(*) FROM movies")->fetchColumn();
 $totalReviews = $pdo->query("SELECT COUNT(*) FROM reviews")->fetchColumn();

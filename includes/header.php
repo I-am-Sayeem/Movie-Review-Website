@@ -16,13 +16,6 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/dome-gallery.css">
-    <script>
-        // Apply saved theme immediately to prevent flash
-        (function() {
-            const savedTheme = localStorage.getItem('cinevault-theme') || 'dark';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-        })();
-    </script>
 </head>
 <body>
     <!-- Flash Messages -->
@@ -41,19 +34,20 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
             </a>
             
             <div class="nav-links" id="navLinks">
-                <a href="index.php" class="nav-link <?php echo $currentPage === 'index' ? 'active' : ''; ?>">Home</a>
+                <?php if (!isLoggedIn()): ?>
+                    <a href="index.php" class="nav-link <?php echo $currentPage === 'index' ? 'active' : ''; ?>">Home</a>
+                <?php endif; ?>
                 <?php if (isLoggedIn()): ?>
                     <a href="movies.php" class="nav-link <?php echo $currentPage === 'movies' ? 'active' : ''; ?>">Movies</a>
-                    <a href="add_movie.php" class="nav-link <?php echo $currentPage === 'add_movie' ? 'active' : ''; ?>">Add Movie</a>
+                    <?php if (isAdmin()): ?>
+                        <a href="add_movie.php" class="nav-link <?php echo $currentPage === 'add_movie' ? 'active' : ''; ?>">Add Movie</a>
+                        <a href="admin_dashboard.php" class="nav-link <?php echo $currentPage === 'admin_dashboard' ? 'active' : ''; ?>">🛡️ Admin</a>
+                    <?php endif; ?>
                     <a href="profile.php" class="nav-link <?php echo $currentPage === 'profile' ? 'active' : ''; ?>">Profile</a>
                 <?php endif; ?>
             </div>
 
             <div class="nav-actions">
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                    <span class="icon-sun">☀️</span>
-                    <span class="icon-moon">🌙</span>
-                </button>
                 <?php if (isLoggedIn()): ?>
                     <div class="nav-user">
                         <div class="nav-avatar"><?php echo getInitials(getCurrentUsername()); ?></div>

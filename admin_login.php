@@ -1,12 +1,19 @@
 <?php
-$pageTitle = 'Login';
+$pageTitle = 'Admin Login';
 require_once 'includes/auth.php';
 
-if (isLoggedIn()) {
-    header('Location: movies.php');
+// If already logged in as admin, go to dashboard
+if (isLoggedIn() && isAdmin()) {
+    header('Location: admin_dashboard.php');
     exit;
 }
 
+// If logged in as regular user, show access denied
+if (isLoggedIn() && !isAdmin()) {
+    setFlash('error', 'Access denied. Admin privileges required.');
+    header('Location: index.php');
+    exit;
+}
 
 $errors = [];
 $oldEmail = '';
@@ -27,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ? AND role = 'admin'");
         $stmt->execute([$email]);
         $user = $stmt->fetch();
 
@@ -35,16 +42,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['email'] = $user['email'];
-            $_SESSION['role'] = $user['role'] ?? 'user';
-            setFlash('success', 'Welcome back, ' . $user['username'] . '! 🎬');
-            header('Location: movies.php');
+            $_SESSION['role'] = 'admin';
+            setFlash('success', 'Welcome back, Admin ' . $user['username'] . '! 🛡️');
+            header('Location: admin_dashboard.php');
             exit;
         } else {
-            $errors['email'] = 'Invalid email or password.';
+            $errors['email'] = 'Invalid admin credentials.';
         }
     }
 }
-
 
 require_once 'includes/header.php';
 ?>
@@ -54,37 +60,36 @@ require_once 'includes/header.php';
 
 <div class="auth-page" style="position: relative; z-index: 1;">
     <div class="card form-card">
-        <h2>Welcome Back</h2>
-        <p class="form-subtitle">Log in to your CineVault account</p>
+        <div class="admin-login-badge">🛡️</div>
+        <h2>Admin Login</h2>
+        <p class="form-subtitle">CineVault Administration Panel</p>
 
-        <form method="POST" action="login.php" novalidate>
+        <form method="POST" action="admin_login.php" novalidate>
             <div class="form-group">
-                <label for="email">Email</label>
+                <label for="email">Admin Email</label>
                 <input type="email" id="email" name="email" class="form-control" 
-                       placeholder="your@email.com" value="<?php echo sanitize($oldEmail); ?>" required>
+                       placeholder="admin@cinevault.com" value="<?php echo sanitize($oldEmail); ?>" required>
                 <?php if (isset($errors['email'])): ?>
                     <div class="form-error">⚠ <?php echo $errors['email']; ?></div>
                 <?php endif; ?>
             </div>
 
             <div class="form-group">
-                <label for="password">Password</label>
+                <label for="password">Admin Password</label>
                 <input type="password" id="password" name="password" class="form-control" 
-                       placeholder="Enter your password" required>
+                       placeholder="Enter admin password" required>
                 <?php if (isset($errors['password'])): ?>
                     <div class="form-error">⚠ <?php echo $errors['password']; ?></div>
                 <?php endif; ?>
             </div>
 
-            <button type="submit" class="btn btn-primary w-full btn-lg">Log In</button>
+            <button type="submit" class="btn btn-admin w-full btn-lg">🔐 Admin Sign In</button>
         </form>
 
         <div class="form-footer">
-            Don't have an account? <a href="register.php">Sign up</a>
-            <br><a href="admin_login.php" style="font-size: 0.82rem; color: var(--text-muted);">🛡️ Admin Login</a>
+            Not an admin? <a href="login.php">Regular login</a>
         </div>
     </div>
 </div>
 
 <?php require_once 'includes/footer.php'; ?>
-<script src="assets/js/bundle.js"></script>
