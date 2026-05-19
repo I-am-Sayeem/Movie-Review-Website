@@ -31,7 +31,9 @@ if ($releaseYear < 1888 || $releaseYear > (int)date('Y') + 5) {
 }
 if (strlen($description) < 10) {
     $errors['description'] = 'Description must be at least 10 characters.';
-}
+
+
+    }
 
 
     // Handle poster upload
